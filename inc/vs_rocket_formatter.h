@@ -1,0 +1,4 @@
+#ifndef VS_ROCKET_FORMATTER_H
+#define VS_ROCKET_FORMATTER_H
+
+#endif
