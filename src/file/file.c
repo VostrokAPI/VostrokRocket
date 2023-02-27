@@ -38,7 +38,26 @@ int	vs_read_file(vs_file_t *vs, const char *pathname, int flags, mode_t mode)
 		return (1);
 	}
 
-	close(vs->fd);
+	return (close(vs->fd) < 0);
+}
 
-	return (0);
+int	vs_open_file(vs_file_t *vs, const char *pathname, int flags, mode_t mode)
+{
+	if (!vs) return (1);
+	return ((vs->fd = open(pathname, flags, mode)) < 0);
+}
+
+int	vs_close_file(vs_file_t *vs)
+{
+	if (!vs) return (1);
+	return (close(vs->fd) < 0);
+}
+
+void vs_free_file_buf(vs_file_t *vs)
+{
+	if (!vs)
+		return ;
+	if (vs->ptr)
+		free(vs->ptr);
+	vs->ptr = NULL;
 }
