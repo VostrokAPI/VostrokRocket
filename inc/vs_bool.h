@@ -1,0 +1,24 @@
+#ifndef VS_BOOL_H
+#define VS_BOOL_H
+
+/////////////////////////////
+//
+//		TYPEDEFS
+//
+/////////////////////////////
+
+typedef enum vs_bool_t vs_bool_t;
+
+/////////////////////////////
+//
+//		ENUMS
+//
+/////////////////////////////
+
+enum vs_bool_t
+{
+	FALSE,
+	TRUE
+};
+
+#endif
