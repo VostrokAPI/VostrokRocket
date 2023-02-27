@@ -1,7 +1,6 @@
 AUTHOR = https://github.com/Unam3dd
 NAME = libvsrocket
 CC = gcc
-AS = as --64 -O1
 AR = ar rcs
 VS_VER	= 0.0.1
 VERSION = $(shell $(CC) --version | head -n1)
@@ -12,7 +11,6 @@ DIST = dist
 UNIT_DIR = $(shell pwd)/unit
 
 vpath %.c src
-vpath %.s src
 vpath %.h inc
 
 ##################################
@@ -33,22 +31,7 @@ RESET 	= \033[00m
 
 NUM_CF		= $(shell ls -lR src/ | grep -F .c | wc -l)
 cnt			= 2
-cnta		= 2
 PERC		= 0
-APERC		= 0
-NUM_AF		= $(shell -ls -lR src/ | grep -F .s | wc -l)
-
-
-##############################################
-#
-#
-#			Assembly Source Files
-#
-#
-##############################################
-
-SRCS_ASM				=	$(shell find src -iname "*.s" -type f -print)
-OBJS_ASM				=	$(addprefix $(OBJDIR)/, $(SRCS_ASM:.s=.o))
 
 ##############################################
 #
@@ -108,23 +91,19 @@ endif
 
 all: $(STATIC_LIB) $(DYNAMIC_LIB)
 
-obj/%.o: %.s
-	$(AS) $< -o  $@
-
 obj/%.o: %.c
 	$(CC) $(CFLAGS) -c $< -o  $@
 
-$(STATIC_LIB): $(OBJDIR) $(OBJS_ASM) $(OBJS)
+$(STATIC_LIB): $(OBJDIR) $(OBJS)
 	@mkdir -p dist
-	$(AR) $(STATIC_LIB) $(OBJS) $(OBJS_ASM)
+	$(AR) $(STATIC_LIB) $(OBJS)
 
-$(DYNAMIC_LIB): $(OBJDIR) $(OBJS_ASM) $(OBJS)
+$(DYNAMIC_LIB): $(OBJDIR) $(OBJS)
 	@mkdir -p dist
-	$(CC) $(CFLAGS) -shared $(OBJS) $(OBJS_ASM) -o $(DYNAMIC_LIB)
+	$(CC) $(CFLAGS) -shared $(OBJS) -o $(DYNAMIC_LIB)
 
 $(OBJDIR):
 	@mkdir -p $(sort $(addprefix $(OBJDIR)/, $(dir $(SRCS))))
-	@mkdir -p $(sort $(addprefix $(OBJDIR)/, $(dir $(SRCS_ASM))))
 
 clean:
 	rm -rf $(OBJDIR)

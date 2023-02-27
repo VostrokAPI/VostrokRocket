@@ -55,9 +55,7 @@ int	vs_close_file(vs_file_t *vs)
 
 void vs_free_file_buf(vs_file_t *vs)
 {
-	if (!vs)
-		return ;
-	if (vs->ptr)
-		free(vs->ptr);
+	if (!vs) return ;
+	if (vs->ptr) free(vs->ptr);
 	vs->ptr = NULL;
 }

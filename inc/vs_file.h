@@ -3,7 +3,7 @@
 
 #include <stddef.h>
 #include <stdint.h>
-#include <sys/stat.h>
+#include <fcntl.h>
 
 /////////////////////////////
 //
